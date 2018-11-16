@@ -1,6 +1,8 @@
 package com.xl.orderservice;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xl.orderservice.modules.OrderModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -30,8 +32,23 @@ public class OrderController {
         }
     }
 
+    @RequestMapping(value = "/setValueWithPost" ,method = RequestMethod.POST)
+    public String writeRedisWithPost( @RequestBody OrderModel orderModel){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            stringRedisTemplate.opsForValue().set( orderModel.getOrderId() , mapper.writeValueAsString(orderModel));
+            return  stringRedisTemplate.opsForValue().get( orderModel.getOrderId() );
+        }
+        catch (Exception ex){
+            return ex.getMessage();
+        }
+    }
+
     @RequestMapping(value = "/getValue" ,method = RequestMethod.GET)
-    public String readRedis( @RequestParam String redisKey ){
+    public String readRedis( String redisKey ){
         return  stringRedisTemplate.opsForValue().get( redisKey );
     }
+
+
 }
