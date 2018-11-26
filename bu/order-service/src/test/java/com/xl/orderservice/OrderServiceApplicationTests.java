@@ -26,7 +26,7 @@ public class OrderServiceApplicationTests {
 
     @Test
     public void contextLoads() {
-        Assert.assertEquals("Success","Success");
+        Assert.assertEquals("Success", "Success");
     }
 
 }

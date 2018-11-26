@@ -16,38 +16,36 @@ public class OrderController {
     private StringRedisTemplate stringRedisTemplate;
 
 
-    @RequestMapping(value = "/ping" ,method = RequestMethod.GET)
-    public String verify(){
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
+    public String verify() {
         return "Pong";
     }
 
-    @RequestMapping(value = "/setValue" ,method = RequestMethod.GET)
-    public String writeRedis( @RequestParam String redisKey, @RequestParam String redisValue ){
+    @RequestMapping(value = "/setValue", method = RequestMethod.GET)
+    public String writeRedis(@RequestParam String redisKey, @RequestParam String redisValue) {
         try {
-            stringRedisTemplate.opsForValue().set( redisKey , redisValue);
-            return  stringRedisTemplate.opsForValue().get( redisKey );
-        }
-        catch (Exception ex){
+            stringRedisTemplate.opsForValue().set(redisKey, redisValue);
+            return stringRedisTemplate.opsForValue().get(redisKey);
+        } catch (Exception ex) {
             return ex.getMessage();
         }
     }
 
-    @RequestMapping(value = "/setValueWithPost" ,method = RequestMethod.POST)
-    public String writeRedisWithPost( @RequestBody OrderModel orderModel){
+    @RequestMapping(value = "/setValueWithPost", method = RequestMethod.POST)
+    public String writeRedisWithPost(@RequestBody OrderModel orderModel) {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
-            stringRedisTemplate.opsForValue().set( orderModel.getOrderId() , mapper.writeValueAsString(orderModel));
-            return  stringRedisTemplate.opsForValue().get( orderModel.getOrderId() );
-        }
-        catch (Exception ex){
+            stringRedisTemplate.opsForValue().set(orderModel.getOrderId(), mapper.writeValueAsString(orderModel));
+            return stringRedisTemplate.opsForValue().get(orderModel.getOrderId());
+        } catch (Exception ex) {
             return ex.getMessage();
         }
     }
 
-    @RequestMapping(value = "/getValue" ,method = RequestMethod.GET)
-    public String readRedis( String redisKey ){
-        return  stringRedisTemplate.opsForValue().get( redisKey );
+    @RequestMapping(value = "/getValue", method = RequestMethod.GET)
+    public String readRedis(String redisKey) {
+        return stringRedisTemplate.opsForValue().get(redisKey);
     }
 
 

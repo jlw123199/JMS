@@ -22,22 +22,52 @@
 
     <br>
 
-    <div v-on:click="postD"> getValue</div>
+    <div v-on:click="postMS"> getValue</div>
 </div>
 </template>
 
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+ <script src="http://files.cnblogs.com/files/zycbloger/vue-resource.min.js"></script>
 <script>
 import Vue from "vue";
 import webAPI from './service/webAPI.js';
 
+
+
 export default {
+  
     name: 'app',
+
+    components:{
+      Vue,
+ 
+
+    },
+
     data() {
         return {
             msg: 'Welcome to Your Vue.js App'
         }
     },
     methods: {
+      
+
+        postMS(){
+           const data1 = {
+                orderId: "order004",
+                orderCode: "order-code-004",
+                orderType: "1"
+            };
+
+
+            Vue.http.post('http://localhost:6011/order/setValueWithPost', data1).then( ()=>{
+            alert("Success");
+          }, 
+           ()=>{
+            alert("Fail");
+          }
+          );
+        },
 
         postD() {
                     const data1 = {
