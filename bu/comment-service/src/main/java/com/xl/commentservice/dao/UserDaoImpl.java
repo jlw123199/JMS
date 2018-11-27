@@ -14,15 +14,6 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public MongoTemplate getMongoTemplate() {
-        return mongoTemplate;
-    }
-
-    public void setMongoTemplate(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
-
-
     /**
      * 创建对象
      * @param user
